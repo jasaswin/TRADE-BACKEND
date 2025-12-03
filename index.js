@@ -50,12 +50,31 @@ app.use(
     origin: [
       "http://localhost:3000", // dashboard
       "http://localhost:3001", // frontend
-       "https://tradefrontendup.vercel.app/",
-      "https://tradedashboardup.vercel.app/",
+       "https://tradefrontendup.vercel.app",
+      "https://tradedashboardup.vercel.app",
       "https://trade-backend-ihxu.onrender.com" 
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+  })
+);
+
+
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (curl, Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -73,6 +92,8 @@ app.use("/api/auth", authRoutes);
 
 
 app.use("/api/trade", tradeRoutes);
+
+
 
 app.post("/api/auth/signup", async (req, res) => {
   try {
