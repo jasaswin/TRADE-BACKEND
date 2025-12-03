@@ -50,6 +50,9 @@ app.use(
     origin: [
       "http://localhost:3000", // dashboard
       "http://localhost:3001", // frontend
+       "https://tradefrontendup.vercel.app/",
+      "https://tradedashboardup.vercel.app/",
+      "https://trade-backend-ihxu.onrender.com" 
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
